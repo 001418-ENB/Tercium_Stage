@@ -1,0 +1,48 @@
+# Makefile — supervision Prometheus avec Blackbox, Node Exporter et Telegraf
+
+# Variables
+PROM_YML=/etc/prometheus/prometheus.yml
+ALERT_YML=/etc/prometheus/alert.rules.yml
+SERVICE_PROM=prometheus.service
+
+.PHONY: all validate reload restart install_prometheus install_exporters check_services
+
+all: validate reload restart
+
+## Vérifie la validité syntaxique des fichiers YAML
+validate:
+	@echo ">> Vérification des fichiers de configuration Prometheus..."
+	@promtool check config $(PROM_YML)
+	@promtool check rules $(ALERT_YML)
+
+## Recharge Prometheus (sans redémarrage complet)
+reload:
+	@echo ">> Rechargement de la configuration Prometheus..."
+	@kill -HUP `pidof prometheus`
+
+## Redémarre Prometheus proprement
+restart:
+	@echo ">> Redémarrage de Prometheus..."
+	sudo systemctl restart $(SERVICE_PROM)
+	sleep 2
+	sudo systemctl status $(SERVICE_PROM) --no-pager
+
+## Installe Prometheus + Node Exporter + Blackbox + Telegraf (avec vérification)
+install_prometheus:
+	@echo ">> Installation de Prometheus et création des dossiers"
+	@sudo apt update && sudo apt install -y prometheus
+
+install_exporters:
+	@echo ">> Installation des exporters"
+	@sudo apt install -y prometheus-node-exporter
+	@sudo systemctl enable prometheus-node-exporter --now
+	@echo ">> Installation de Blackbox Exporter"
+	@sudo useradd --no-create-home --shell /usr/sbin/nologin blackbox_exporter || true
+	@sudo mkdir -p /etc/blackbox_exporter
+	@wget -qO- https://github.com/prometheus/blackbox_exporter/releases/download/v0.24.0/blackbox_exporter-0.24.0.linux-amd64.tar.gz | tar xzvf - --strip-components=1 -C /usr/local/bin
+	@echo "Blackbox Exporter installé. Pensez à créer le service systemd."
+
+## Vérifie les services
+check_services:
+	@systemctl is-active --quiet prometheus && echo "Prometheus OK" || echo "Prometheus KO"
+	@systemctl is-active --quiet prometheus-node-exporter && echo "Node Exporter OK" || echo "Node Exporter KO"

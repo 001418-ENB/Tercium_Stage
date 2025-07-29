@@ -1,0 +1,91 @@
+test@KUS-F-STAGE MINGW64 ~
+$ ssh -i "C:/Users/test/Documents/Tercium Stage/Private_key_01_07_2025_openssh" ubuntu@<IP_PUBLIQUE>
+bash: syntax error near unexpected token `newline'
+
+test@KUS-F-STAGE MINGW64 ~
+$ # Vérifiez que vos clés existent
+ls -la ~/.ssh/
+
+# Définissez les bonnes permissions
+chmod 600 ~/.ssh/id_rsa        # clé privée
+chmod 644 ~/.ssh/id_rsa.pub    # clé publique
+total 21
+drwxr-xr-x 1 test 197609    0 Apr 28 10:22 ./
+drwxr-xr-x 1 test 197609    0 Jul  1 09:16 ../
+-rw-r--r-- 1 test 197609 1136 Jul  1 09:01 known_hosts
+-rw-r--r-- 1 test 197609  203 Apr 28 10:22 known_hosts.old
+chmod: cannot access '/c/Users/test/.ssh/id_rsa': No such file or directory
+chmod: cannot access '/c/Users/test/.ssh/id_rsa.pub': No such file or directory
+
+
+test@KUS-F-STAGE MINGW64 ~/Documents/Tercium Stage
+$ ls -la
+total 2985
+drwxr-xr-x 1 test 197609       0 Jul  1 09:09  ./
+drwxr-xr-x 1 test 197609       0 Jun 30 13:35  ../
+-rw-r--r-- 1 test 197609     162 Jul  1 09:05 '~$urnal Tercium.docx'
+drwxr-xr-x 1 test 197609       0 Jul  1 09:09  ./
+drwxr-xr-x 1 test 197609       0 Jun 30 13:35  ../
+-rw-r--r-- 1 test 197609     162 Jul  1 09:05 '~$urnal Tercium.docx'
+drwxr-xr-x 1 test 197609       0 Jun 30 13:35  ../
+-rw-r--r-- 1 test 197609     162 Jul  1 09:05 '~$urnal Tercium.docx'
+-rw-r--r-- 1 test 197609     162 Jul  1 09:05 '~$urnal Tercium.docx'
+-rw-r--r-- 1 test 197609  309181 Jun 30 14:18 'Données non insérables.docx'
+-rw-r--r-- 1 test 197609  309181 Jun 30 14:18 'Données non insérables.docx'
+-rw-r--r-- 1 test 197609  762140 Jun 30 16:26 'Journal Tercium.docx'
+-rw-r--r-- 1 test 197609  762140 Jun 30 16:26 'Journal Tercium.docx'
+-rw-r--r-- 1 test 197609    1458 Jul  1 08:53  Private_key_01_07_2025.ppk
+-rw-r--r-- 1 test 197609    1679 Jul  1 09:15  Private_key_01_07_2025_openssh
+-rw-r--r-- 1 test 197609    1679 Jul  1 09:15  Private_key_01_07_2025_openssh
+-rw-r--r-- 1 test 197609    1679 Jul  1 09:15  Private_key_01_07_2025_openssh        rwxr-xr-x 1 test 197609       0 Jun 30 16:15 'Saisies écran'/
+-rw-r--r-- 1 test 197609    1011 Jul  1 10:25 'public key.txt'
+-rw-r--r-- 1 test 197609    1679 Jul  1 09:15  Private_key_01_07_2025_openssh       
+-rw-r--r-- 1 test 197609    1011 Jul  1 10:25 'public key.txt'
+-rw-r--r-- 1 test 197609    1679 Jul  1 09:15  Private_key_01_07_2025_openssh      
+-rw-r--r-- 1 test 197609    1011 Jul  1 10:25 'public key.txt'
+drwxr-xr-x 1 test 197609       0 Jun 30 16:15 'Saisies écran'/
+-rw-r--r-- 1 test 197609    1679 Jul  1 09:15  Private_key_01_07_2025_openssh     
+-rw-r--r-- 1 test 197609    1011 Jul  1 10:25 'public key.txt'
+drwxr-xr-x 1 test 197609       0 Jun 30 16:15 'Saisies écran'/
+-rw-r--r-- 1 test 197609    1679 Jul  1 09:15  Private_key_01_07_2025_openssh    
+-rw-r--r-- 1 test 197609    1011 Jul  1 10:25 'public key.txt'
+drwxr-xr-x 1 test 197609       0 Jun 30 16:15 'Saisies écran'/
+-rw-r--r-- 1 test 197609 1943452 Jul  1 08:15 'Saisies écran.zip'
+
+-rw-r--r-- 1 test 197609    1679 Jul  1 09:15  Private_key_01_07_2025_openssh
+-rw-r--r-- 1 test 197609    1011 Jul  1 10:25 'public key.txt'
+drwxr-xr-x 1 test 197609       0 Jun 30 16:15 'Saisies écran'/
+-rw-r--r-- 1 test 197609 1943452 Jul  1 08:15 'Saisies écran.zip'
+
+test@KUS-F-STAGE MINGW64 ~/Documents/Tercium Stage
+
+
+
+test@KUS-F-STAGE MINGW64 ~/Documents/Tercium Stage
+$ ssh-keygen -t rsa -b 4096 -f ~/.ssh/tercium_key
+Generating public/private rsa key pair.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /c/Users/test/.ssh/tercium_key
+Your public key has been saved in /c/Users/test/.ssh/tercium_key.pub
+The key fingerprint is:
+SHA256:20tHohOF5oLEU+agZtdhJaC8R/4O87/LOmULkTt2gZE test@KUS-F-STAGE
+The key's randomart image is:
++---[RSA 4096]----+
+|    o.*o.        |
+| . + BEo .       |
+|  * * o+o .      |
+| o * o+o..       |
+|  . + .oS.. .    |
+|   . .=.+= o     |
+|    o..*+.o .    |
+|     =...o o     |
+|      ++=o.      |
++----[SHA256]-----+
+
+test@KUS-F-STAGE MINGW64 ~/Documents/Tercium Stage
+$ cat ~/.ssh/tercium_key.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCWE/w1/jTFDSggxilqzGmX94VOdzpZbw34ifcK6xgCX7QMifXhDP34KE0Yb3QFc9U8c2bfCPsQgE+AFxsfoWle1+jSq61ILhGjMA3B5tuzX4ZhvZ5IN+SiD/O3bp+Sd3Mzhfy0fr9TI7ybf3PyYndibVuMYqAdNU97yMpyLl7jw8epXFEt+6gBszXVKjZHk/0xY0JQR3D7ABUxvO/jmUeI081gfxjvHHLU8IIQeQ6u4Ap6MTSutQhe1xKmI8ci/+q2jh19gctabi6NZNIGCiQxsMwHJ/Ar/TsRw63CDCwTgndS3ZhtkqzoGxGpjCoD6D8T6mx8KVlbxwdUCizB92jysf90kS2+mRaBukvRpPjVKjfRaUgUPBV31pINJKtfQAYWWj+aRV/5fYcJ1WRW4YIwilHHzvxv7f22q6TTwB6YADe7vtPpRYLZUOkf/w6U++G/sUtAtnNzb7xMBE/FjiN/ZeVt8qATFIQggwmuO9aLmgbFa8OqWvAiYcBmJRf8Rj2/C9iSdb5GxRdgq4pmpoJIqZxIqv1puOkDHWKmUNAzjoaymma/p8Tz9WGbPrVWXLamXylwZ2iO/30kPNtEbNBgN2D6uO194FRMmTEP09AwowVbHix1XG2GUv2h7mxnE0hxH10uZIHEWDFclIA88kTcAqVAzP/yZZe3k9ZXcn6i2Q== test@KUS-F-STAGE
+
+
+

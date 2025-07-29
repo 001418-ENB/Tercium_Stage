@@ -1,0 +1,45 @@
+{
+  "id": null,
+  "title": "Blackbox Exporter - HTTP Probes",
+  "timezone": "browser",
+  "schemaVersion": 26,
+  "version": 1,
+  "panels": [
+    {
+      "type": "graph",
+      "title": "HTTP Probe Success",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "probe_success{job=\"blackbox_http\"}",
+          "legendFormat": "{{instance}}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 6
+      }
+    },
+    {
+      "type": "graph",
+      "title": "HTTP Probe Duration",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "probe_duration_seconds{job=\"blackbox_http\"}",
+          "legendFormat": "{{instance}}",
+          "refId": "B"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 7,
+        "w": 24,
+        "h": 6
+      }
+    }
+  ]
+}

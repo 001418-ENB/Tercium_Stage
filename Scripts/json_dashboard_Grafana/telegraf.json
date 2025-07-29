@@ -1,0 +1,87 @@
+{
+  "title": "Telegraf System Dashboard (Prometheus)",
+  "uid": "telegraf-prometheus",
+  "timezone": "browser",
+  "schemaVersion": 26,
+  "version": 1,
+  "refresh": "10s",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "CPU Usage %",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "100 - (avg by (instance) (irate(cpu_usage_idle{job=\"telegraf\"}[5m])) * 100)",
+          "refId": "A",
+          "legendFormat": "{{instance}}"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      }
+    },
+    {
+      "type": "graph",
+      "title": "Memory Usage %",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "(1 - (mem_available_percent{job=\"telegraf\"} / 100)) * 100",
+          "refId": "A",
+          "legendFormat": "{{instance}}"
+        }
+      ],
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      }
+    },
+    {
+      "type": "graph",
+      "title": "Disk Usage %",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "(1 - (disk_free_percent{job=\"telegraf\"} / 100)) * 100",
+          "refId": "A",
+          "legendFormat": "{{instance}}"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      }
+    },
+    {
+      "type": "graph",
+      "title": "Network RX/TX",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "rate(net_bytes_recv{job=\"telegraf\"}[5m])",
+          "refId": "A",
+          "legendFormat": "{{instance}} RX"
+        },
+        {
+          "expr": "rate(net_bytes_sent{job=\"telegraf\"}[5m])",
+          "refId": "B",
+          "legendFormat": "{{instance}} TX"
+        }
+      ],
+      "gridPos": {
+        "x": 12,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+name: Deploy to Infomaniak
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -p 22 ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
+
+    - name: Rsync config to Infomaniak
+      run: |
+        rsync -avz -e "ssh -p 22" ./etc/ ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/etc/
+        rsync -avz -e "ssh -p 22" ./opt/ ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/opt/

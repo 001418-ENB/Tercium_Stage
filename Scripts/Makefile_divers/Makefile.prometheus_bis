@@ -1,0 +1,34 @@
+# ┌──────────────────────────────────────────┐
+# │ MAKEFILE – GESTION PROMETHEUS (Linux)    │
+# └──────────────────────────────────────────┘
+
+SERVICE_NAME=prometheus
+CONFIG_PATH=/etc/prometheus/prometheus.yml
+CONFIG_CHECK_CMD=promtool check config $(CONFIG_PATH)
+
+.PHONY: start stop reload restart check
+
+start:
+	sudo systemctl start $(SERVICE_NAME)
+	echo "✅ Prometheus démarré"
+
+stop:
+	sudo systemctl stop $(SERVICE_NAME)
+	echo "🛑 Prometheus arrêté"
+
+restart:
+	sudo systemctl restart $(SERVICE_NAME)
+	echo "🔄 Prometheus redémarré"
+
+reload:
+	sudo systemctl reload $(SERVICE_NAME)
+	echo "♻️  Prometheus rechargé (si supporté)"
+
+check:
+	$(CONFIG_CHECK_CMD)
+
+# Nettoyage des fichiers temporaires Word
+clean_temp:
+	@echo "[Nettoyage] Suppression des fichiers Word temporaires..."
+	@find . -type f \( -name '~WRL*.tmp' -o -name '~$*.docx' \) -exec rm -f {} \;
+	@echo "[OK] Tous les fichiers temporaires Word ont été supprimés."

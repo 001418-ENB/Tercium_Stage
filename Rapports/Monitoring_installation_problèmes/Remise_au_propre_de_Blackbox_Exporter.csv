@@ -1,0 +1,11 @@
+Étape,Commande
+1. Nettoyage des anciens chemins,sudo rm -rf /opt/blackbox_exporter
+2. Création des dossiers standards,sudo mkdir -p /etc/blackbox_exporter
+3. Droits utilisateur,sudo chown -R ubuntu:ubuntu /etc/blackbox_exporter
+4. Téléchargement du binaire,cd /tmp && wget https://github.com/prometheus/blackbox_exporter/releases/latest/download/blackbox_exporter.tar.gz
+5. Extraction,tar -xvzf blackbox_exporter.tar.gz
+6. Installation du binaire,sudo mv blackbox_exporter*/blackbox_exporter /usr/local/bin/ && sudo chmod +x /usr/local/bin/blackbox_exporter
+7. Création du service systemd,sudo nano /etc/systemd/system/blackbox_exporter.service
+8. Création du fichier de config,sudo nano /etc/blackbox_exporter/blackbox.yml
+9. Redémarrage systemd,sudo systemctl daemon-reexec && sudo systemctl daemon-reload && sudo systemctl restart blackbox_exporter
+10. Vérification,systemctl status blackbox_exporter && ss -tuln | grep 9115

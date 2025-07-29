@@ -1,0 +1,5 @@
+Objectif,Outil / Script,Installation,Remarque
+Vérification des ports ouverts TCP/UDP,Bash + netcat (nc),déjà disponible sur la plupart des distros,Utilisé pour tester localement ou à distance l’ouverture effective d’un port
+Supervision technique et disponibilité,Prometheus + Blackbox Exporter,Déjà en place,Tester probe_success sur TCP/UDP pour les cibles critiques
+Détection d’intrusion réseau,Suricata,apt install suricata,Surveillance en temps réel des paquets réseau ; à relier à un port miroir (mirrored NIC) si possible
+Détection comportementale et corrélation,Wazuh (SIEM),Script officiel ou dépôt .deb,"Corrèle les logs système, Prometheus, règles Suricata, etc."

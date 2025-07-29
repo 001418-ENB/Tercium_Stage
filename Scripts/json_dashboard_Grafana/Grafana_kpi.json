@@ -1,0 +1,45 @@
+{
+  "title": "Supervision KPI",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Availability %",
+      "targets": [
+        {
+          "expr": "100 * avg_over_time(probe_success[1h])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Scrape Duration",
+      "targets": [
+        {
+          "expr": "scrape_duration_seconds",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "CPU Usage %",
+      "targets": [
+        {
+          "expr": "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Available Memory (MB)",
+      "targets": [
+        {
+          "expr": "node_memory_MemAvailable_bytes / 1024 / 1024",
+          "refId": "A"
+        }
+      ]
+    }
+  ]
+}

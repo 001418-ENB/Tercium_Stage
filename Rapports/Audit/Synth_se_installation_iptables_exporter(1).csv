@@ -1,0 +1,19 @@
+Étape,Commande
+Préparation du dossier,sudo mkdir -p /opt/iptables_exporter
+Clonage du dépôt,sudo git clone https://github.com/Showmax/iptables_exporter.git ./
+Installation dépendances,sudo apt install --allow-change-held-packages -y git golang make
+Compilation,cd /opt/iptables_exporter && make
+Création user système,sudo useradd -rs /bin/false iptables_exporter
+Service systemd,"[Unit]
+Description=iptables exporter
+After=network.target
+
+[Service]
+User=iptables_exporter
+ExecStart=/opt/iptables_exporter/iptables_exporter --web.listen-address=:9145
+Restart=always
+
+[Install]
+WantedBy=multi-user.target"
+Activation service,sudo systemctl daemon-reload && sudo systemctl enable --now iptables_exporter
+Vérification,curl http://localhost:9145/metrics

@@ -1,0 +1,136 @@
+# Supervision Prometheus & Exporters — Infrastructure Sécurisée
+
+## 📌 Objectif
+
+Ce projet met en place un système complet de supervision réseau et système avec :
+
+- Prometheus
+- Node Exporter
+- Blackbox Exporter
+- Telegraf
+- Intégration Grafana (optionnelle)
+- Automatisation via `Makefile`
+- Déploiement possible via Terraform + GitHub Actions
+
+---
+
+## 🗂️ Structure du dépôt
+
+.
+├── Makefile
+├── install_prometheus.sh
+├── install_exporters.sh
+├── check_and_restart_services.sh
+├── verify_ports_exporters.sh
+├── prometheus/
+│ ├── prometheus.yml
+│ └── alert.rules.yml
+└── README.md
+
+
+---
+
+## ⚙️ Prérequis
+
+- Système Ubuntu 20.04 ou 22.04
+- Prometheus ≥ 2.50
+- `promtool`, `curl`, `ss`
+- Droits `sudo`
+
+---
+
+## 🚀 Installation en 2 étapes
+
+```bash
+make install_prometheus
+make install_exporters
+
+
+✅ Vérification et Validation
+
+```bash
+make validate           # Vérifie les fichiers YAML
+make reload             # Recharge la conf Prometheus
+make check_services     # Vérifie les services
+make verify             # Affiche les ports écoutés + targets actives
+
+
+🔄 Redémarrage
+
+```bash
+make restart
+
+Description des scripts
+
+| Script                          | Rôle                                               |
+| ------------------------------- | -------------------------------------------------- |
+| `install_prometheus.sh`         | Installe Prometheus et configure son service       |
+| `install_exporters.sh`          | Installe node\_exporter et blackbox\_exporter      |
+| `verify_ports_exporters.sh`     | Vérifie si les bons ports sont écoutés et visibles |
+| `check_and_restart_services.sh` | Relance les services s’ils ne sont pas actifs      |
+
+
+Branches Git recommandées
+
+| Branche   | Rôle                                              |
+| --------- | ------------------------------------------------- |
+| `main`    | Version de production                             |
+| `preprod` | Configuration en préproduction                    |
+| `test`    | Tests unitaires ou ajout de modules expérimentaux |
+
+Sécurité réseau
+
+    Blackbox Exporter est configuré pour :
+
+        HTTP 2xx
+
+        Ping ICMP
+
+        Résolution DNS
+
+        Test de port TCP
+
+        Bannière SSH
+
+    Tous les remplacements localhost → 127.0.0.1 sont conseillés pour éviter les conflits IPv6.
+
+
+Vérification des targets Prometheus
+
+Accès à la liste des cibles : http://localhost:9091/-/targets
+
+ Exemple de déploiement via Terraform + Makefile
+
+    Instancier la VM via Terraform
+
+    git clone du dépôt
+
+    Lancer la configuration :
+
+    ```bash
+    make install_prometheus
+    make install_exporters
+    make validate
+    make reload
+
+ Test des modules Blackbox
+
+Ajoutez des cibles dans prometheus.yml sous :
+
+   ```yaml
+job_name: 'blackbox_exporter_http'
+params:
+  module: [http_2xx]
+static_configs:
+  - targets:
+      - https://www.google.com
+
+
+Support
+
+Ce dépôt est prêt à être cloné dans un environnement pro.
+En cas de problème : consulter les logs Prometheus et utiliser make verify pour diagnostiquer.
+
+Licence
+
+Projet sous licence MIT ou CC-BY-SA selon votre politique de sécurité.

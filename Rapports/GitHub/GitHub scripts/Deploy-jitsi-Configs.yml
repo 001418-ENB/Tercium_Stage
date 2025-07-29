@@ -1,0 +1,14 @@
+name: Deploy Jitsi Configs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Sync via rsync
+        run: rsync -avz ./etc/jitsi user@IP_INFOMANIAK:/etc/jitsi/

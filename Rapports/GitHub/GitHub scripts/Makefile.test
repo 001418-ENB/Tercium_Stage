@@ -1,0 +1,25 @@
+# Makefile pour jitsi-meet-infra
+
+# Variables personnalisables
+REMOTE_USER = ubuntu
+REMOTE_HOST = your-instance.infomaniak.com
+SSH_PORT = 22
+
+# Cibles
+.PHONY: help push deploy check
+
+help:
+	@echo "Commandes disponibles :"
+	@echo "  make push     -> Transfère manuellement les fichiers /etc/ et /opt/"
+	@echo "  make deploy   -> Lance le script push_to_infomaniak.sh"
+	@echo "  make check    -> Vérifie l’accès SSH distant"
+
+push:
+	rsync -avz -e "ssh -p $(SSH_PORT)" ./etc/ $(REMOTE_USER)@$(REMOTE_HOST):/etc/
+	rsync -avz -e "ssh -p $(SSH_PORT)" ./opt/ $(REMOTE_USER)@$(REMOTE_HOST):/opt/
+
+deploy:
+	bash ./scripts/push_to_infomaniak.sh
+
+check:
+	ssh -p $(SSH_PORT) $(REMOTE_USER)@$(REMOTE_HOST) "echo '[✓] Connexion SSH réussie'"

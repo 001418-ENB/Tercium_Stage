@@ -1,0 +1,161 @@
+# ┌─────────────────────────────────────────────────────────────┐
+# │ PROMETHEUS CONFIGURATION – TERCIUM_STAGE (fusion complète)  │
+# └─────────────────────────────────────────────────────────────┘
+
+global:
+  scrape_interval: 15s        # Fréquence d'interrogation des cibles
+  scrape_timeout: 10s         # Délai maximal d’attente d’une réponse
+  evaluation_interval: 15s    # Fréquence d'évaluation des règles d’alerte
+  external_labels:
+    monitor: 'jitsi-cluster'  # Identifiant global du cluster
+
+# ───────────────
+# ALERTMANAGER
+# ───────────────
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['localhost:9093']
+
+# ───────────────
+# FICHIERS DE RÈGLES D’ALERTES
+# ───────────────
+rule_files:
+  - "alert.rules.yml"
+
+# ───────────────
+# JOBS DE SCRAPING
+# ───────────────
+scrape_configs:
+
+  # PROMETHEUS LOCAL
+  - job_name: 'prometheus_local'
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['localhost:9091']
+        labels:
+          instance: 'local_prometheus'
+
+  # PROMETHEUS DISTANT
+  - job_name: 'prometheus_distant'
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['37.156.46.238:9091']
+        labels:
+          instance: 'distant_prometheus'
+
+  # NODE EXPORTER LOCAL
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['localhost:9100']
+        labels:
+          instance: 'node_local'
+
+  # NODE EXPORTER DISTANT
+  - job_name: 'node_exporter_distant'
+    static_configs:
+      - targets: ['37.156.46.238:9100']
+        labels:
+          instance: 'node_distant'
+
+  # TELEGRAPH EXPORTER
+  - job_name: 'telegraf'
+    static_configs:
+      - targets: ['localhost:9273']
+
+  # PFSENSE EXPORTER (SNMP ou JSON API)
+  - job_name: 'pfsense_exporter'
+    static_configs:
+      - targets: ['localhost:9192']
+
+# ───────────────
+# BLACKBOX EXPORTER – MODULES MULTIPLES
+# ───────────────
+
+  # HTTP/HTTPS
+  - job_name: 'blackbox_http'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+          - https://example.com
+          - http://localhost:80
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115
+
+  # ICMP (Ping)
+  - job_name: 'blackbox_exporter_icmp'
+    metrics_path: /probe
+    params:
+      module: [icmp]
+    static_configs:
+      - targets:
+          - 8.8.8.8
+          - 1.1.1.1
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115
+
+  # TCP (connexion brute à un port)
+  - job_name: 'blackbox_exporter_tcp'
+    metrics_path: /probe
+    params:
+      module: [tcp_connect]
+    static_configs:
+      - targets:
+          - localhost:22
+          - localhost:443
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115
+
+  # SSH Banner
+  - job_name: 'blackbox_exporter_ssh'
+    metrics_path: /probe
+    params:
+      module: [ssh_banner]
+    static_configs:
+      - targets:
+          - localhost:22
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115
+
+  # DNS Resolution
+  - job_name: 'blackbox_exporter_dns'
+    metrics_path: /probe
+    params:
+      module: [dns]
+    static_configs:
+      - targets:
+          - example.com
+          - google.com
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115

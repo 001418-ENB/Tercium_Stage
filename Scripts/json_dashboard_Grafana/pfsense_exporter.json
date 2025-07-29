@@ -1,0 +1,50 @@
+{
+  "id": null,
+  "title": "pfSense Exporter - Firewall Metrics",
+  "timezone": "browser",
+  "schemaVersion": 26,
+  "version": 1,
+  "panels": [
+    {
+      "type": "graph",
+      "title": "pfSense Firewall States",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "pf_state_count",
+          "legendFormat": "states",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 6
+      }
+    },
+    {
+      "type": "graph",
+      "title": "pfSense Interface Bytes",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "pf_interface_bytes{direction=\"in\"}",
+          "legendFormat": "in - {{if}}",
+          "refId": "B"
+        },
+        {
+          "expr": "pf_interface_bytes{direction=\"out\"}",
+          "legendFormat": "out - {{if}}",
+          "refId": "C"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 7,
+        "w": 24,
+        "h": 6
+      }
+    }
+  ]
+}

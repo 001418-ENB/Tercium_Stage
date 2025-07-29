@@ -1,0 +1,10 @@
+Usage Report For Period:,2025-07-07,2025-07-07
+Project ID:,7646a67b63144f89bb5938cff2ccba60
+Active Instances:,1
+Total VCPU Usage (Hours):,0.52
+Total Active RAM (MB):,8192
+Total Memory Usage (Hours):,1057.85
+Total Disk Size (GB):,20
+Total Disk Usage (Hours):,2.58
+"Instance Name","VCPUs","RAM (MB)","Disk (GB)","Usage (Hours)","Age (Seconds)","State"
+"jitsi-tercium","4","8192","20","0.13","464","Active"

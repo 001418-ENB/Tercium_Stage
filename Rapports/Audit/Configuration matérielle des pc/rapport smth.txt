@@ -1,0 +1,157 @@
+PS C:\Users\Tercium> $pc = $env:COMPUTERNAME
+PS C:\Users\Tercium> $date = Get-Date -Format "yyyyMMdd_HHmm"
+PS C:\Users\Tercium> $output = "$env:USERPROFILE\Desktop\config_$pc`_$date.txt"
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> "=== CONFIGURATION HARDWARE POUR $pc ===" | Out-File -FilePath $output
+PS C:\Users\Tercium> "Date : $(Get-Date)`n" | Out-File -Append $output
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> CPU
+CPU : Le terme «CPU» n'est pas reconnu comme nom d'applet de commande, fonction, fichier de script ou programme
+exécutable. Vérifiez l'orthographe du nom, ou si un chemin d'accès existe, vérifiez que le chemin d'accès est correct
+et réessayez.
+Au caractère Ligne:1 : 1
++ CPU
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (CPU:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> "== CPU ==" | Out-File -Append $output
+PS C:\Users\Tercium> Get-CimInstance Win32_Processor | ForEach-Object {
+>> "Nom : $($_.Name)"
+>> "Cœurs : $($_.NumberOfCores)"
+>> "Threads : $($_.NumberOfLogicalProcessors)"
+>> "Fréquence : $($_.MaxClockSpeed) MHz`n"
+>> } | Out-File -Append $output
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> RAM
+RAM : Le terme «RAM» n'est pas reconnu comme nom d'applet de commande, fonction, fichier de script ou programme
+exécutable. Vérifiez l'orthographe du nom, ou si un chemin d'accès existe, vérifiez que le chemin d'accès est correct
+et réessayez.
+Au caractère Ligne:1 : 1
++ RAM
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (RAM:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> "== RAM ==" | Out-File -Append $output
+PS C:\Users\Tercium> Get-CimInstance Win32_PhysicalMemory | ForEach-Object {
+>> "Capacité : $([math]::Round($_.Capacity / 1GB)) Go"
+>> "Fabricant : $($_.Manufacturer)"
+>> "Modèle : $($_.PartNumber)"
+>> "Vitesse : $($_.Speed) MHz`n"
+>> } | Out-File -Append $output
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> Disques
+Disques : Le terme «Disques» n'est pas reconnu comme nom d'applet de commande, fonction, fichier de script ou
+programme exécutable. Vérifiez l'orthographe du nom, ou si un chemin d'accès existe, vérifiez que le chemin d'accès
+est correct et réessayez.
+Au caractère Ligne:1 : 1
++ Disques
++ ~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Disques:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> "== Disques ==" | Out-File -Append $output
+PS C:\Users\Tercium> Get-CimInstance Win32_DiskDrive | ForEach-Object {
+>> "Modèle : $($_.Model)"
+>> "Taille : $([math]::Round($_.Size / 1GB)) Go"
+>> "Interface : $($_.InterfaceType)"
+>> "Type : $($_.MediaType)`n"
+>> } | Out-File -Append $output
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> Carte mère
+Carte : Le terme «Carte» n'est pas reconnu comme nom d'applet de commande, fonction, fichier de script ou programme
+exécutable. Vérifiez l'orthographe du nom, ou si un chemin d'accès existe, vérifiez que le chemin d'accès est correct
+et réessayez.
+Au caractère Ligne:1 : 1
++ Carte mère
++ ~~~~~
+    + CategoryInfo          : ObjectNotFound: (Carte:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> "== Carte mère ==" | Out-File -Append $output
+PS C:\Users\Tercium> Get-CimInstance Win32_BaseBoard | ForEach-Object {
+>> "Fabricant : $($_.Manufacturer)"
+>> "Modèle : $($_.Product)"
+>> "Numéro de série : $($_.SerialNumber)`n"
+>> } | Out-File -Append $output
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> BIOS
+BIOS : Le terme «BIOS» n'est pas reconnu comme nom d'applet de commande, fonction, fichier de script ou programme
+exécutable. Vérifiez l'orthographe du nom, ou si un chemin d'accès existe, vérifiez que le chemin d'accès est correct
+et réessayez.
+Au caractère Ligne:1 : 1
++ BIOS
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (BIOS:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> "== BIOS ==" | Out-File -Append $output
+PS C:\Users\Tercium> Get-CimInstance Win32_BIOS | ForEach-Object {
+>> "Fabricant : $($_.Manufacturer)"
+>> "Version : $($_.SMBIOSBIOSVersion)"
+>> "Date : $($_.ReleaseDate)`n"
+>> } | Out-File -Append $output
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> GPU
+GPU : Le terme «GPU» n'est pas reconnu comme nom d'applet de commande, fonction, fichier de script ou programme
+exécutable. Vérifiez l'orthographe du nom, ou si un chemin d'accès existe, vérifiez que le chemin d'accès est correct
+et réessayez.
+Au caractère Ligne:1 : 1
++ GPU
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (GPU:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> "== Carte graphique ==" | Out-File -Append $output
+PS C:\Users\Tercium> Get-CimInstance Win32_VideoController | ForEach-Object {
+>> "Nom : $($_.Name)"
+>> "Driver : $($_.DriverVersion)"
+>> "Mémoire : $([math]::Round($_.AdapterRAM / 1MB)) Mo`n"
+>> } | Out-File -Append $output
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> Réseau
+Réseau : Le terme «Réseau» n'est pas reconnu comme nom d'applet de commande, fonction, fichier de script ou programme
+exécutable. Vérifiez l'orthographe du nom, ou si un chemin d'accès existe, vérifiez que le chemin d'accès est correct
+et réessayez.
+Au caractère Ligne:1 : 1
++ Réseau
++ ~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Réseau:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> "== Interfaces réseau ==" | Out-File -Append $output
+PS C:\Users\Tercium> Get-NetIPAddress | Where-Object {$.AddressFamily -eq 'IPv4' -and $.InterfaceAlias -notlike 'Loopback'} | ForEach-Object {
+>> "Interface : $($.InterfaceAlias) — IP : $($.IPAddress)"
+>> } | Out-File -Append $output
+Where-Object : Le terme «$.AddressFamily» n'est pas reconnu comme nom d'applet de commande, fonction, fichier de
+script ou programme exécutable. Vérifiez l'orthographe du nom, ou si un chemin d'accès existe, vérifiez que le chemin
+d'accès est correct et réessayez.
+Au caractère Ligne:1 : 20
++ ... IPAddress | Where-Object {$.AddressFamily -eq 'IPv4' -and $.Interface ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: ($.AddressFamily:String) [Where-Object], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException,Microsoft.PowerShell.Commands.WhereObjectCommand
+
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> "`n=== FIN DU RAPPORT ===" | Out-File -Append $output
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> Affiche le fichier généré
+Affiche : Le terme «Affiche» n'est pas reconnu comme nom d'applet de commande, fonction, fichier de script ou
+programme exécutable. Vérifiez l'orthographe du nom, ou si un chemin d'accès existe, vérifiez que le chemin d'accès
+est correct et réessayez.
+Au caractère Ligne:1 : 1
++ Affiche le fichier généré
++ ~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Affiche:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\Tercium>
+PS C:\Users\Tercium> Write-Host "`n✅ Rapport généré : $output"

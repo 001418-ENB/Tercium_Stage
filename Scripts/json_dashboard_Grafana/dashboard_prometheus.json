@@ -1,0 +1,72 @@
+{
+  "id": null,
+  "uid": "prometheus-self",
+  "title": "Prometheus - Self Monitoring",
+  "timezone": "browser",
+  "schemaVersion": 30,
+  "version": 1,
+  "refresh": "30s",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Prometheus - Target Scrapes Duration",
+      "id": 1,
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "scrape_duration_seconds{job='prometheus'}",
+          "legendFormat": "{{instance}} scrape duration",
+          "interval": "",
+          "refId": "A"
+        }
+      ],
+      "xaxis": {
+        "show": true
+      },
+      "yaxes": [
+        {
+          "format": "s"
+        },
+        {
+          "format": "short"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Prometheus - Total Time Series",
+      "id": 2,
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "prometheus_tsdb_head_series",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0
+        }
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Prometheus - Active Targets",
+      "id": 3,
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "count(up == 1)",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0
+        }
+      }
+    }
+  ]
+}

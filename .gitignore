@@ -1,0 +1,42 @@
+cat > .gitignore << 'EOF'
+
+# ===========================
+# Fichiers temporaires Word
+# ===========================
+~$*
+~WRL*.tmp
+
+# ===========================
+# Fichiers systÃ¨me
+# ===========================
+.DS_Store
+Thumbs.db
+
+# ===========================
+# ClÃ©s SSH
+# ===========================
+ssh_keys/
+
+# ===========================
+# Fichiers sensibles
+# ===========================
+.env
+*.env
+*.pem
+*.key
+
+# ===========================
+# RÃ©pertoires locaux Ã  exclure
+# ===========================
+reserve/
+Memoire_RNCP/
+
+# ===========================
+# í´’ Protection contre les .git internes (ex : sous-modules fantÃ´mes)
+# ===========================
+**/.git
+Scripts/**/.git
+Rapports/**/.git
+EOF
+
+

@@ -1,0 +1,29 @@
+
+# Makefile – Gestion Prometheus binaire
+
+start:
+	sudo systemctl start prometheus
+
+stop:
+	sudo systemctl stop prometheus
+
+restart:
+	sudo systemctl restart prometheus
+
+status:
+	sudo systemctl status prometheus
+
+validate:
+	/opt/prometheus/promtool check config /etc/prometheus/prometheus.yml
+
+logs:
+	sudo journalctl -u prometheus -f
+
+reload:
+	sudo systemctl daemon-reload
+
+enable:
+	sudo systemctl enable prometheus
+
+disable:
+	sudo systemctl disable prometheus

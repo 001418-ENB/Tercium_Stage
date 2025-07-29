@@ -1,0 +1,31 @@
+# Fichier .gitignore – Empêche le commit de fichiers sensibles et locaux
+
+# Fichiers d’environnement
+.env
+
+# Clés SSH ou privées
+*.pem
+*.key
+*.rsa
+*.pub
+id_rsa*
+
+# Fichiers de log ou de debug
+*.log
+*.out
+
+# Dossiers temporaires
+__pycache__/
+*.tmp
+*.bak
+
+# Sauvegardes locales
+backup/
+scripts/*.sh~
+
+# Éditeurs
+.vscode/
+.idea/
+
+# Systèmes Unix / macOS
+.DS_Store

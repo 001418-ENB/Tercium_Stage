@@ -1,0 +1,6 @@
+.PHONY: audit
+
+audit:
+	@echo "== Lancement de l’audit GitHub local =="
+	@bash ./audit_git.sh > audit_rapport.txt
+	@echo "== Rapport généré : audit_rapport.txt =="
